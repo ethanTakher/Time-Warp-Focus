@@ -1,0 +1,1 @@
+This is a code from which other codes will be built. Think of it as a mother code.

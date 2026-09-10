@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Click Image Game</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="screen">
+
+    <!-- Starting image -->
+    <button
+      id="mouseButton"
+      class="image-button"
+      type="button"
+      aria-label="Click the image"
+    >
+      <img
+        src="assets/enrique.png"
+        alt="Gray mouse image"
+      />
+    </button>
+
+    <!-- Animated GIF shown after clicking -->
+    <img
+      id="rickrollImage"
+      class="hidden"
+      src="assets/rickroll-roll.gif"
+      alt="Animated singing performer"
+    />
+
+    <!-- Picture permanently displayed in the bottom-right corner -->
+    <img
+      id="meImage"
+      src="assets/me.png"
+      alt="Personal picture"
+    />
+
+    <!-- Sound played after clicking -->
+    <audio id="enriqueSound" preload="auto">
+      <source src="assets/enrique.mp3" type="audio/mpeg" />
+      Your browser does not support audio.
+    </audio>
+
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
