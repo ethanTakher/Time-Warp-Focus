@@ -13,7 +13,6 @@
   --danger: #a84532;
   --danger-dark: #712819;
   --success: #526d3f;
-  --silver: #aeb7bd;
 }
 
 * {
@@ -35,11 +34,16 @@ body {
       rgba(86, 49, 23, 0.035) 0 1px,
       transparent 1px 5px
     ),
-    linear-gradient(100deg, #a66e39 0%, var(--scroll-light) 16%, #efd19a 52%, var(--scroll-mid) 86%, #8b542b 100%);
+    linear-gradient(
+      100deg,
+      #a66e39 0%,
+      var(--scroll-light) 16%,
+      #efd19a 52%,
+      var(--scroll-mid) 86%,
+      #8b542b 100%
+    );
   font-family: Georgia, "Times New Roman", serif;
 }
-
-/* Scroll rods at the top and bottom of the popup. */
 
 body::before,
 body::after {
@@ -74,16 +78,12 @@ body::after {
   bottom: -8px;
 }
 
-/* Main layout area. */
-
 .popup-shell {
   position: relative;
   z-index: 1;
   min-height: 560px;
   padding: 28px 21px 31px;
 }
-
-/* Decorative background scene container. */
 
 .popup-shell::before {
   content: "";
@@ -101,8 +101,6 @@ body::after {
       rgba(116, 66, 28, 0.26) 100%
     );
 }
-
-/* Pyramid: only the uncovered left-side and lower edge are visible. */
 
 .popup-shell::after {
   content: "";
@@ -124,45 +122,58 @@ body::after {
   pointer-events: none;
 }
 
-/* The heading stays above the background art. */
-
 .hero {
   position: relative;
   z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin: 0 4px 17px;
-  padding: 8px 13px 12px;
+  padding: 8px 10px 12px;
   border-top: 1px solid rgba(94, 55, 27, 0.28);
   border-bottom: 1px solid rgba(94, 55, 27, 0.28);
-  text-align: center;
   text-shadow: 0 1px 0 rgba(255, 239, 198, 0.75);
 }
 
+.shield-logo {
+  display: block;
+  flex: 0 0 auto;
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 3px 2px rgba(70, 34, 13, 0.42))
+    drop-shadow(0 0 7px rgba(255, 223, 145, 0.35));
+}
+
+.hero-text {
+  min-width: 0;
+  text-align: left;
+}
+
 .eyebrow {
-  margin: 0 0 7px;
+  margin: 0 0 5px;
   color: #875323;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
 }
 
 h1 {
   margin: 0;
   color: #3e2414;
-  font-size: 28px;
+  font-size: 25px;
   line-height: 1.05;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 .subtitle {
-  margin: 9px 0 0;
+  margin: 7px 0 0;
   color: var(--muted-ink);
-  font-size: 12px;
+  font-size: 11px;
   font-style: italic;
-  line-height: 1.45;
+  line-height: 1.35;
 }
-
-/* Interior parchment panel.
-   This deliberately covers most of the pyramid and longship scene. */
 
 .panel {
   position: relative;
@@ -177,16 +188,22 @@ h1 {
       rgba(103, 59, 27, 0.032) 0 1px,
       transparent 1px 5px
     ),
-    radial-gradient(ellipse at 12% 10%, rgba(255, 255, 225, 0.78), transparent 30%),
-    linear-gradient(100deg, var(--panel-paper-dark), var(--panel-paper) 13%, rgba(255, 239, 203, 0.98) 52%, var(--panel-paper-dark));
+    radial-gradient(
+      ellipse at 12% 10%,
+      rgba(255, 255, 225, 0.78),
+      transparent 30%
+    ),
+    linear-gradient(
+      100deg,
+      var(--panel-paper-dark),
+      var(--panel-paper) 13%,
+      rgba(255, 239, 203, 0.98) 52%,
+      var(--panel-paper-dark)
+    );
   box-shadow:
     0 5px 10px rgba(74, 38, 16, 0.35),
     inset 0 0 22px rgba(113, 62, 24, 0.2);
 }
-
-/* Longship decoration.
-   It is attached to the active panel area so that it appears to be behind it.
-   Most of it extends beyond the visible panel and popup edges. */
 
 #activePanel::after {
   content: "";
@@ -228,8 +245,6 @@ h1 {
   filter: drop-shadow(3px 5px 2px rgba(65, 28, 10, 0.34));
 }
 
-/* Dragon-head prow. */
-
 #activePanel::before {
   content: "";
   position: absolute;
@@ -247,13 +262,9 @@ h1 {
   pointer-events: none;
 }
 
-/* Keep the initial setup panel visually centered and above scenery. */
-
 #setupPanel {
   min-height: 218px;
 }
-
-/* Popup fields. */
 
 label {
   display: block;
@@ -313,7 +324,12 @@ button:active {
 .primary-button {
   color: #fff0c6;
   background:
-    linear-gradient(180deg, #bd7c35 0%, #8d4c1f 53%, #673217 100%);
+    linear-gradient(
+      180deg,
+      #bd7c35 0%,
+      #8d4c1f 53%,
+      #673217 100%
+    );
   box-shadow:
     0 3px 0 #4b2310,
     inset 0 1px 1px rgba(255, 226, 159, 0.45);
@@ -323,7 +339,12 @@ button:active {
   margin-top: 12px;
   color: #f7e7bd;
   background:
-    linear-gradient(180deg, #826246 0%, #5b3d27 54%, #422817 100%);
+    linear-gradient(
+      180deg,
+      #826246 0%,
+      #5b3d27 54%,
+      #422817 100%
+    );
   box-shadow:
     0 3px 0 #2c190f,
     inset 0 1px 1px rgba(255, 230, 179, 0.22);
@@ -333,7 +354,12 @@ button:active {
   margin-top: 10px;
   color: #ffe7d6;
   background:
-    linear-gradient(180deg, #bd5e45 0%, #913a2c 53%, #642116 100%);
+    linear-gradient(
+      180deg,
+      #bd5e45 0%,
+      #913a2c 53%,
+      #642116 100%
+    );
   box-shadow:
     0 3px 0 #46150d,
     inset 0 1px 1px rgba(255, 214, 183, 0.27);
@@ -342,8 +368,6 @@ button:active {
 .hidden {
   display: none;
 }
-
-/* Active focus-session details. */
 
 .status-row {
   display: flex;

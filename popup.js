@@ -13,13 +13,6 @@ const focusTime = document.getElementById("focusTime");
 const distractionTime = document.getElementById("distractionTime");
 const warningMessage = document.getElementById("warningMessage");
 
-const languageNames = {
-  runes: "Viking Runes — Silver",
-  greek: "Greek-style Letters",
-  glyphs: "Egyptian Hieroglyph-like Glyphs",
-  cuneiform: "Sumerian Cuneiform"
-};
-
 function formatTime(milliseconds) {
   const totalSeconds = Math.floor(milliseconds / 1000);
   const minutes = Math.floor(totalSeconds / 60);

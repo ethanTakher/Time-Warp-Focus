@@ -30,6 +30,7 @@ async function updateTimeTracking() {
     await saveState({
       lastTimestamp: now
     });
+
     return;
   }
 
@@ -90,8 +91,8 @@ async function sendTabMode(tab) {
       fadeMode: state.fadeMode
     });
   } catch (error) {
-    // The tab may still be loading, may not support content scripts,
-    // or Chrome may block script access on that page.
+    // Chrome blocks content scripts on some pages,
+    // and a normal page may not be finished loading yet.
   }
 }
 

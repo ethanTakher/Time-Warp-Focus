@@ -17,7 +17,19 @@
   },
   "action": {
     "default_title": "Time Warp Focus",
-    "default_popup": "index.html"
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "shield.png",
+      "32": "shield.png",
+      "48": "shield.png",
+      "128": "shield.png"
+    }
+  },
+  "icons": {
+    "16": "shield.png",
+    "32": "shield.png",
+    "48": "shield.png",
+    "128": "shield.png"
   },
   "content_scripts": [
     {
