@@ -1,0 +1,1 @@
+AI Prompt 1: Create a vscode code that will become a chrome extension. Here is a pdf explaining the code. Also, the template I am using for the files and folders is the following (Note: I can add files. Also, please fill out roadmap and all those .mds)

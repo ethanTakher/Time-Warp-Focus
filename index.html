@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Time Warp Focus</title>
+
+  <link rel="stylesheet" href="popup.css" />
+</head>
+
+<body>
+  <main class="popup-shell">
+    <header class="hero">
+      <p class="eyebrow">TIME WARP FOCUS</p>
+
+      <h1>Stay in the future.</h1>
+
+      <p class="subtitle">
+        Keep one tab readable. Send the rest back through time.
+      </p>
+    </header>
+
+    <section class="panel" id="setupPanel">
+      <label for="focusTab">Your focus tab</label>
+
+      <select id="focusTab"></select>
+
+      <label for="language">Translation style</label>
+
+      <select id="language">
+        <option value="runes">Viking Runes — Silver</option>
+        <option value="greek">Greek-style Letters</option>
+        <option value="glyphs">Egyptian Hieroglyph-like Glyphs</option>
+        <option value="cuneiform">Sumerian Cuneiform</option>
+      </select>
+
+      <button id="startButton" class="primary-button">
+        Begin Focus Session
+      </button>
+    </section>
+
+    <section class="panel hidden" id="activePanel">
+      <div class="status-row">
+        <span class="status-dot"></span>
+        <span>Focus session active</span>
+      </div>
+
+      <div class="focus-tab-card">
+        <p class="card-label">Readable tab</p>
+
+        <p id="activeFocusTab" class="focus-tab-name">
+          Loading...
+        </p>
+      </div>
+
+      <div class="timer-grid">
+        <div class="timer-card">
+          <p>Focus time</p>
+          <strong id="focusTime">00:00</strong>
+        </div>
+
+        <div class="timer-card warning-card">
+          <p>Translated-tab time</p>
+          <strong id="distractionTime">00:00</strong>
+        </div>
+      </div>
+
+      <p id="warningMessage" class="warning-message hidden">
+        You have spent twice as long on translated tabs.
+        They are now fading to guide you back.
+      </p>
+
+      <button id="resetTimerButton" class="secondary-button">
+        Reset Session Timer
+      </button>
+
+      <button id="stopButton" class="danger-button">
+        Turn Off Translation
+      </button>
+    </section>
+
+    <footer>
+      <p>Your browsing activity stays on your device.</p>
+    </footer>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>

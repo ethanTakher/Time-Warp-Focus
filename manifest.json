@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "Time Warp Focus",
+  "version": "1.0.0",
+  "description": "Keep one tab readable and turn other tabs into an ancient-language-style focus barrier.",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Time Warp Focus",
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "main.js"
+      ],
+      "css": [
+        "style.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
