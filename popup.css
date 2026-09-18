@@ -5,14 +5,19 @@
   --scroll-edge: #653b20;
   --ink: #382317;
   --muted-ink: #765037;
-  --gold: #a66c2f;
-  --gold-light: #dba95c;
-  --panel-paper: rgba(250, 231, 190, 0.95);
+  --panel-paper: rgba(250, 231, 190, 0.96);
   --panel-paper-dark: rgba(226, 190, 130, 0.96);
   --line: rgba(94, 55, 27, 0.36);
   --danger: #a84532;
   --danger-dark: #712819;
   --success: #526d3f;
+  --scene-main: #b67a3e;
+  --scene-shadow: #78421f;
+  --scene-highlight: #ffe0a2;
+  --button-top: #bd7c35;
+  --button-mid: #8d4c1f;
+  --button-bottom: #673217;
+  --button-shadow: #4b2310;
 }
 
 * {
@@ -27,8 +32,16 @@ body {
   margin: 0;
   color: var(--ink);
   background:
-    radial-gradient(ellipse at 24% 15%, rgba(255, 247, 210, 0.86) 0 4%, transparent 25%),
-    radial-gradient(ellipse at 78% 76%, rgba(102, 53, 24, 0.22) 0 5%, transparent 30%),
+    radial-gradient(
+      ellipse at 24% 15%,
+      rgba(255, 247, 210, 0.86) 0 4%,
+      transparent 25%
+    ),
+    radial-gradient(
+      ellipse at 78% 76%,
+      rgba(102, 53, 24, 0.22) 0 5%,
+      transparent 30%
+    ),
     repeating-linear-gradient(
       0deg,
       rgba(86, 49, 23, 0.035) 0 1px,
@@ -43,7 +56,12 @@ body {
       #8b542b 100%
     );
   font-family: Georgia, "Times New Roman", serif;
+  transition: background 260ms ease, color 260ms ease;
 }
+
+/* =======================================================
+   GLOBAL SCROLL RODS
+======================================================= */
 
 body::before,
 body::after {
@@ -78,12 +96,21 @@ body::after {
   bottom: -8px;
 }
 
+/* =======================================================
+   MAIN POPUP LAYOUT
+======================================================= */
+
 .popup-shell {
   position: relative;
   z-index: 1;
   min-height: 560px;
   padding: 28px 21px 31px;
 }
+
+/*
+  This layer is behind the main panel.
+  Each language theme changes its appearance.
+*/
 
 .popup-shell::before {
   content: "";
@@ -92,35 +119,31 @@ body::after {
   inset: 0;
   opacity: 0.72;
   pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      transparent 0%,
-      transparent 51%,
-      rgba(116, 66, 28, 0.1) 52%,
-      rgba(116, 66, 28, 0.26) 100%
-    );
 }
+
+/*
+  This is the primary background landmark:
+  Egyptian = pyramid
+  Greek = shield
+  Cuneiform = ziggurat
+  Runes = metal mountain/ship atmosphere
+*/
 
 .popup-shell::after {
   content: "";
   position: absolute;
   z-index: 0;
-  bottom: 20px;
+  bottom: 18px;
   left: -46px;
   width: 228px;
   height: 208px;
-  opacity: 0.68;
-  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-  background:
-    linear-gradient(
-      115deg,
-      rgba(255, 221, 153, 0.95) 0 49%,
-      rgba(124, 70, 31, 0.76) 50% 100%
-    );
-  filter: drop-shadow(4px 8px 4px rgba(68, 34, 14, 0.3));
+  opacity: 0.7;
   pointer-events: none;
 }
+
+/* =======================================================
+   HERO AREA
+======================================================= */
 
 .hero {
   position: relative;
@@ -135,15 +158,12 @@ body::after {
   text-shadow: 0 1px 0 rgba(255, 239, 198, 0.75);
 }
 
-.shield-logo {
-  display: block;
+.language-emblem {
+  position: relative;
   flex: 0 0 auto;
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
-  filter:
-    drop-shadow(0 3px 2px rgba(70, 34, 13, 0.42))
-    drop-shadow(0 0 7px rgba(255, 223, 145, 0.35));
+  width: 50px;
+  height: 50px;
+  filter: drop-shadow(0 3px 2px rgba(70, 34, 13, 0.42));
 }
 
 .hero-text {
@@ -175,6 +195,11 @@ h1 {
   line-height: 1.35;
 }
 
+/* =======================================================
+   INTERIOR PANEL
+   This covers most of the background landmark artwork.
+======================================================= */
+
 .panel {
   position: relative;
   z-index: 4;
@@ -205,66 +230,13 @@ h1 {
     inset 0 0 22px rgba(113, 62, 24, 0.2);
 }
 
-#activePanel::after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  right: -112px;
-  bottom: -79px;
-  width: 245px;
-  height: 115px;
-  opacity: 0.67;
-  transform: rotate(-5deg);
-  pointer-events: none;
-  background:
-    linear-gradient(
-      180deg,
-      transparent 0 31%,
-      #56301d 32% 37%,
-      transparent 38% 42%,
-      #704022 43% 55%,
-      transparent 56% 100%
-    );
-  clip-path: polygon(
-    0% 40%,
-    20% 39%,
-    28% 31%,
-    35% 35%,
-    42% 26%,
-    49% 34%,
-    56% 23%,
-    63% 34%,
-    70% 29%,
-    78% 40%,
-    100% 42%,
-    91% 65%,
-    75% 74%,
-    30% 76%,
-    9% 64%
-  );
-  filter: drop-shadow(3px 5px 2px rgba(65, 28, 10, 0.34));
-}
-
-#activePanel::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  right: -18px;
-  bottom: 5px;
-  width: 54px;
-  height: 88px;
-  border: 8px solid #4b2919;
-  border-bottom: 0;
-  border-left: 0;
-  border-radius: 0 60% 0 0;
-  opacity: 0.7;
-  transform: rotate(16deg);
-  pointer-events: none;
-}
-
 #setupPanel {
   min-height: 218px;
 }
+
+/* =======================================================
+   FORM CONTROLS
+======================================================= */
 
 label {
   display: block;
@@ -326,12 +298,12 @@ button:active {
   background:
     linear-gradient(
       180deg,
-      #bd7c35 0%,
-      #8d4c1f 53%,
-      #673217 100%
+      var(--button-top) 0%,
+      var(--button-mid) 53%,
+      var(--button-bottom) 100%
     );
   box-shadow:
-    0 3px 0 #4b2310,
+    0 3px 0 var(--button-shadow),
     inset 0 1px 1px rgba(255, 226, 159, 0.45);
 }
 
@@ -368,6 +340,10 @@ button:active {
 .hidden {
   display: none;
 }
+
+/* =======================================================
+   ACTIVE SESSION DETAILS
+======================================================= */
 
 .status-row {
   display: flex;
@@ -463,4 +439,663 @@ footer {
 
 footer p {
   margin: 0;
+}
+
+/* =======================================================
+   EGYPTIAN GLYPH THEME
+   Scroll, sandstone pyramid, desert gold.
+======================================================= */
+
+body.theme-glyphs {
+  --ink: #382317;
+  --muted-ink: #765037;
+  --panel-paper: rgba(250, 231, 190, 0.96);
+  --panel-paper-dark: rgba(226, 190, 130, 0.96);
+  --button-top: #bd7c35;
+  --button-mid: #8d4c1f;
+  --button-bottom: #673217;
+  --button-shadow: #4b2310;
+}
+
+body.theme-glyphs .popup-shell::before {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 50%,
+      rgba(116, 66, 28, 0.1) 51%,
+      rgba(116, 66, 28, 0.26) 100%
+    );
+}
+
+body.theme-glyphs .popup-shell::after {
+  bottom: 20px;
+  left: -46px;
+  width: 228px;
+  height: 208px;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  background:
+    linear-gradient(
+      115deg,
+      rgba(255, 221, 153, 0.95) 0 49%,
+      rgba(124, 70, 31, 0.76) 50% 100%
+    );
+  filter: drop-shadow(4px 8px 4px rgba(68, 34, 14, 0.3));
+}
+
+body.theme-glyphs .language-emblem {
+  border: 3px solid #70401d;
+  border-radius: 3px;
+  background:
+    linear-gradient(
+      135deg,
+      #ffe0a4 0 48%,
+      #b97531 49% 100%
+    );
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+}
+
+body.theme-glyphs .language-emblem::after {
+  content: "𓂀";
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  color: #613314;
+  font-family: "Segoe UI Historic", serif;
+  font-size: 28px;
+}
+
+/* =======================================================
+   GREEK THEME
+   Marble background and a Greek shield landmark.
+======================================================= */
+
+body.theme-greek {
+  --ink: #39434a;
+  --muted-ink: #5f6d74;
+  --panel-paper: rgba(244, 244, 239, 0.96);
+  --panel-paper-dark: rgba(207, 210, 209, 0.96);
+  --button-top: #83949c;
+  --button-mid: #566770;
+  --button-bottom: #38474f;
+  --button-shadow: #263239;
+  background:
+    radial-gradient(
+      ellipse at 20% 15%,
+      rgba(255, 255, 255, 0.92) 0 5%,
+      transparent 25%
+    ),
+    repeating-linear-gradient(
+      112deg,
+      rgba(82, 96, 104, 0.07) 0 1px,
+      transparent 1px 21px
+    ),
+    repeating-linear-gradient(
+      18deg,
+      rgba(255, 255, 255, 0.38) 0 2px,
+      transparent 2px 28px
+    ),
+    linear-gradient(125deg, #f5f5f0 0%, #c8cdce 49%, #9ba5a8 100%);
+}
+
+body.theme-greek::before,
+body.theme-greek::after {
+  border-color: rgba(64, 77, 83, 0.68);
+  background:
+    linear-gradient(
+      180deg,
+      #657278 0%,
+      #dce1e1 24%,
+      #8d9a9e 50%,
+      #e7eae6 76%,
+      #56646b 100%
+    );
+  box-shadow:
+    0 3px 6px rgba(40, 49, 53, 0.4),
+    inset 0 2px 2px rgba(255, 255, 255, 0.52),
+    inset 0 -3px 4px rgba(50, 59, 64, 0.3);
+}
+
+body.theme-greek .popup-shell::before {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 55%,
+      rgba(77, 91, 97, 0.12) 56%,
+      rgba(77, 91, 97, 0.22) 100%
+    );
+}
+
+body.theme-greek .popup-shell::after {
+  bottom: 22px;
+  left: -32px;
+  width: 192px;
+  height: 192px;
+  border: 13px solid #657278;
+  border-radius: 50%;
+  clip-path: none;
+  background:
+    radial-gradient(circle at 34% 27%, #ffffff 0 6%, transparent 7%),
+    radial-gradient(circle at 69% 73%, rgba(69, 84, 91, 0.32) 0 4%, transparent 5%),
+    repeating-linear-gradient(
+      35deg,
+      rgba(84, 96, 102, 0.08) 0 2px,
+      transparent 2px 18px
+    ),
+    linear-gradient(145deg, #f2f2ed, #aeb7b8);
+  box-shadow:
+    inset 12px 9px 14px rgba(255, 255, 255, 0.66),
+    inset -14px -12px 17px rgba(64, 76, 81, 0.34),
+    5px 8px 5px rgba(56, 65, 69, 0.25);
+}
+
+body.theme-greek .popup-shell::after {
+  content: "Σ";
+  display: grid;
+  place-items: center;
+  color: rgba(58, 72, 79, 0.66);
+  font-size: 108px;
+  font-weight: 700;
+  text-shadow: 1px 2px 0 rgba(255, 255, 255, 0.55);
+}
+
+body.theme-greek .language-emblem {
+  border: 3px solid #647178;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, #ffffff 0 8%, transparent 9%),
+    repeating-linear-gradient(
+      32deg,
+      rgba(88, 101, 107, 0.1) 0 2px,
+      transparent 2px 14px
+    ),
+    linear-gradient(145deg, #f1f2ee, #9ba7aa);
+  box-shadow:
+    inset 4px 3px 5px rgba(255, 255, 255, 0.8),
+    inset -4px -4px 6px rgba(70, 84, 90, 0.32);
+}
+
+body.theme-greek .language-emblem::after {
+  content: "Ω";
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  color: #46565d;
+  font-size: 31px;
+  font-weight: 700;
+}
+
+body.theme-greek .hero {
+  border-color: rgba(76, 90, 97, 0.28);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.86);
+}
+
+body.theme-greek .eyebrow,
+body.theme-greek footer {
+  color: #596a72;
+}
+
+body.theme-greek h1,
+body.theme-greek .focus-tab-name,
+body.theme-greek .timer-card strong {
+  color: #39474e;
+}
+
+body.theme-greek label,
+body.theme-greek .card-label,
+body.theme-greek .timer-card p {
+  color: #5c6a70;
+}
+
+body.theme-greek .panel {
+  border-color: rgba(72, 86, 92, 0.43);
+  background:
+    repeating-linear-gradient(
+      40deg,
+      rgba(85, 99, 105, 0.04) 0 1px,
+      transparent 1px 7px
+    ),
+    radial-gradient(
+      ellipse at 15% 10%,
+      rgba(255, 255, 255, 0.88),
+      transparent 31%
+    ),
+    linear-gradient(
+      115deg,
+      rgba(200, 206, 205, 0.96),
+      rgba(250, 250, 245, 0.97) 44%,
+      rgba(196, 202, 202, 0.96)
+    );
+  box-shadow:
+    0 5px 10px rgba(65, 77, 82, 0.28),
+    inset 0 0 22px rgba(76, 91, 96, 0.15);
+}
+
+body.theme-greek select {
+  border-color: rgba(74, 90, 97, 0.43);
+  color: #35454d;
+  background: rgba(250, 251, 247, 0.88);
+}
+
+body.theme-greek select:focus {
+  border-color: #647c86;
+  box-shadow:
+    0 0 0 3px rgba(103, 126, 136, 0.2),
+    inset 0 1px 3px rgba(70, 85, 91, 0.1);
+}
+
+body.theme-greek .secondary-button {
+  background:
+    linear-gradient(180deg, #728187 0%, #4f5d64 54%, #344148 100%);
+  box-shadow:
+    0 3px 0 #243036,
+    inset 0 1px 1px rgba(255, 255, 255, 0.24);
+}
+
+/* =======================================================
+   NORSE / RUNE THEME
+   Metal background and a longship landmark.
+======================================================= */
+
+body.theme-runes {
+  --ink: #dfe5e8;
+  --muted-ink: #b8c2c8;
+  --panel-paper: rgba(50, 60, 68, 0.96);
+  --panel-paper-dark: rgba(32, 39, 46, 0.97);
+  --button-top: #9daab1;
+  --button-mid: #66757e;
+  --button-bottom: #435058;
+  --button-shadow: #283138;
+  background:
+    radial-gradient(
+      ellipse at 21% 16%,
+      rgba(230, 238, 242, 0.18) 0 4%,
+      transparent 26%
+    ),
+    repeating-linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.055) 0 1px,
+      transparent 1px 15px
+    ),
+    repeating-linear-gradient(
+      17deg,
+      rgba(0, 0, 0, 0.13) 0 2px,
+      transparent 2px 24px
+    ),
+    linear-gradient(130deg, #1d252c 0%, #56636d 50%, #222a31 100%);
+}
+
+body.theme-runes::before,
+body.theme-runes::after {
+  border-color: rgba(187, 202, 211, 0.45);
+  background:
+    linear-gradient(
+      180deg,
+      #303b44 0%,
+      #c0cbd0 23%,
+      #6d7c85 50%,
+      #dce4e7 76%,
+      #344049 100%
+    );
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.52),
+    inset 0 2px 2px rgba(255, 255, 255, 0.35),
+    inset 0 -3px 4px rgba(0, 0, 0, 0.45);
+}
+
+body.theme-runes .popup-shell::before {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 50%,
+      rgba(10, 16, 21, 0.2) 51%,
+      rgba(10, 16, 21, 0.49) 100%
+    );
+}
+
+body.theme-runes .popup-shell::after {
+  content: "";
+  bottom: 7px;
+  left: -72px;
+  width: 300px;
+  height: 154px;
+  clip-path: polygon(
+    0% 56%,
+    10% 51%,
+    18% 43%,
+    25% 49%,
+    33% 38%,
+    42% 47%,
+    52% 36%,
+    61% 46%,
+    72% 41%,
+    85% 51%,
+    100% 55%,
+    92% 69%,
+    75% 79%,
+    23% 81%,
+    5% 69%
+  );
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0 29%,
+      #b3c0c7 30% 35%,
+      transparent 36% 40%,
+      #46535c 41% 56%,
+      #242d34 57% 100%
+    );
+  filter: drop-shadow(4px 7px 3px rgba(0, 0, 0, 0.48));
+}
+
+body.theme-runes #activePanel::after,
+body.theme-runes #setupPanel::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  right: -22px;
+  bottom: -26px;
+  width: 62px;
+  height: 102px;
+  border: 8px solid #bac7cd;
+  border-bottom: 0;
+  border-left: 0;
+  border-radius: 0 65% 0 0;
+  opacity: 0.72;
+  transform: rotate(17deg);
+  pointer-events: none;
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.44));
+}
+
+body.theme-runes .language-emblem {
+  border: 3px solid #c4d0d5;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 26%, #edf4f5 0 8%, transparent 9%),
+    linear-gradient(135deg, #6f7d85, #242d34);
+  box-shadow:
+    inset 3px 3px 5px rgba(255, 255, 255, 0.46),
+    inset -5px -5px 7px rgba(0, 0, 0, 0.38);
+}
+
+body.theme-runes .language-emblem::after {
+  content: "ᚠ";
+  position: absolute;
+  top: 5px;
+  left: 12px;
+  color: #eff5f7;
+  font-family: "Segoe UI Symbol", "Arial Unicode MS", serif;
+  font-size: 33px;
+  font-weight: 700;
+}
+
+body.theme-runes .hero {
+  border-color: rgba(211, 224, 230, 0.22);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.58);
+}
+
+body.theme-runes .eyebrow,
+body.theme-runes footer,
+body.theme-runes label,
+body.theme-runes .card-label,
+body.theme-runes .timer-card p {
+  color: #bcc8ce;
+}
+
+body.theme-runes h1,
+body.theme-runes .focus-tab-name,
+body.theme-runes .timer-card strong {
+  color: #eef4f6;
+}
+
+body.theme-runes .subtitle {
+  color: #c7d2d7;
+}
+
+body.theme-runes .panel {
+  border-color: rgba(204, 219, 225, 0.28);
+  background:
+    repeating-linear-gradient(
+      125deg,
+      rgba(255, 255, 255, 0.045) 0 1px,
+      transparent 1px 7px
+    ),
+    radial-gradient(
+      ellipse at 15% 10%,
+      rgba(220, 233, 238, 0.15),
+      transparent 30%
+    ),
+    linear-gradient(
+      115deg,
+      rgba(31, 39, 46, 0.97),
+      rgba(70, 82, 91, 0.96) 48%,
+      rgba(31, 39, 46, 0.97)
+    );
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.46),
+    inset 0 0 22px rgba(214, 228, 234, 0.08);
+}
+
+body.theme-runes select {
+  border-color: rgba(208, 222, 228, 0.31);
+  color: #e5edf0;
+  background: rgba(20, 27, 33, 0.78);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.38);
+}
+
+body.theme-runes select:focus {
+  border-color: #b7c7ce;
+  box-shadow:
+    0 0 0 3px rgba(183, 199, 206, 0.18),
+    inset 0 1px 3px rgba(0, 0, 0, 0.38);
+}
+
+body.theme-runes .focus-tab-card,
+body.theme-runes .timer-card {
+  border-color: rgba(209, 223, 228, 0.19);
+  background: rgba(3, 10, 14, 0.24);
+}
+
+body.theme-runes .secondary-button {
+  color: #edf4f6;
+  background:
+    linear-gradient(180deg, #6e7e86 0%, #47555d 54%, #2d383f 100%);
+  box-shadow:
+    0 3px 0 #1d252b,
+    inset 0 1px 1px rgba(255, 255, 255, 0.21);
+}
+
+/* =======================================================
+   SUMERIAN CUNEIFORM THEME
+   Clay background and stepped ziggurat landmark.
+======================================================= */
+
+body.theme-cuneiform {
+  --ink: #522d1f;
+  --muted-ink: #744332;
+  --panel-paper: rgba(239, 191, 135, 0.96);
+  --panel-paper-dark: rgba(190, 116, 74, 0.97);
+  --button-top: #c77846;
+  --button-mid: #94472b;
+  --button-bottom: #66301f;
+  --button-shadow: #472014;
+  background:
+    radial-gradient(
+      ellipse at 20% 14%,
+      rgba(255, 224, 176, 0.54) 0 4%,
+      transparent 24%
+    ),
+    repeating-linear-gradient(
+      10deg,
+      rgba(100, 46, 26, 0.075) 0 2px,
+      transparent 2px 17px
+    ),
+    repeating-linear-gradient(
+      95deg,
+      rgba(255, 214, 162, 0.11) 0 1px,
+      transparent 1px 20px
+    ),
+    linear-gradient(125deg, #d7a071 0%, #b66c46 50%, #7d3e28 100%);
+}
+
+body.theme-cuneiform::before,
+body.theme-cuneiform::after {
+  border-color: rgba(85, 38, 23, 0.67);
+  background:
+    linear-gradient(
+      180deg,
+      #6d301f 0%,
+      #d58b50 24%,
+      #9e512f 52%,
+      #e9af6b 77%,
+      #69301d 100%
+    );
+  box-shadow:
+    0 3px 6px rgba(69, 29, 15, 0.45),
+    inset 0 2px 2px rgba(255, 221, 164, 0.45),
+    inset 0 -3px 4px rgba(74, 28, 13, 0.35);
+}
+
+body.theme-cuneiform .popup-shell::before {
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 50%,
+      rgba(96, 43, 25, 0.15) 51%,
+      rgba(82, 34, 20, 0.35) 100%
+    );
+}
+
+body.theme-cuneiform .popup-shell::after {
+  content: "";
+  bottom: 18px;
+  left: -38px;
+  width: 242px;
+  height: 204px;
+  clip-path: polygon(
+    50% 0%,
+    67% 18%,
+    64% 18%,
+    78% 37%,
+    73% 37%,
+    90% 59%,
+    83% 59%,
+    100% 100%,
+    0% 100%,
+    17% 59%,
+    10% 59%,
+    27% 37%,
+    22% 37%,
+    36% 18%,
+    33% 18%
+  );
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #8a452b 0 12px,
+      #c67648 13px 25px,
+      #6e351f 26px 29px
+    );
+  box-shadow:
+    inset 12px 0 0 rgba(255, 201, 137, 0.22),
+    inset -15px 0 0 rgba(72, 29, 17, 0.28);
+  filter: drop-shadow(5px 8px 4px rgba(74, 30, 17, 0.32));
+}
+
+body.theme-cuneiform .language-emblem {
+  border: 3px solid #6d321e;
+  border-radius: 5px;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      #a85331 0 7px,
+      #ce7d4d 8px 15px
+    );
+  box-shadow:
+    inset 3px 3px 4px rgba(255, 207, 147, 0.35),
+    inset -4px -4px 5px rgba(75, 29, 16, 0.3);
+}
+
+body.theme-cuneiform .language-emblem::after {
+  content: "𒀀";
+  position: absolute;
+  top: 7px;
+  left: 10px;
+  color: #5c291a;
+  font-family: "Segoe UI Historic", "Arial Unicode MS", serif;
+  font-size: 29px;
+  font-weight: 700;
+}
+
+body.theme-cuneiform .hero {
+  border-color: rgba(103, 47, 27, 0.35);
+  text-shadow: 0 1px 0 rgba(255, 219, 166, 0.58);
+}
+
+body.theme-cuneiform .eyebrow,
+body.theme-cuneiform footer,
+body.theme-cuneiform label,
+body.theme-cuneiform .card-label,
+body.theme-cuneiform .timer-card p {
+  color: #713b28;
+}
+
+body.theme-cuneiform h1,
+body.theme-cuneiform .focus-tab-name,
+body.theme-cuneiform .timer-card strong {
+  color: #51291d;
+}
+
+body.theme-cuneiform .panel {
+  border-color: rgba(99, 43, 24, 0.52);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(104, 43, 25, 0.05) 0 1px,
+      transparent 1px 6px
+    ),
+    radial-gradient(
+      ellipse at 13% 10%,
+      rgba(255, 230, 182, 0.68),
+      transparent 31%
+    ),
+    linear-gradient(
+      105deg,
+      rgba(187, 105, 67, 0.97),
+      rgba(245, 198, 139, 0.96) 48%,
+      rgba(180, 94, 59, 0.97)
+    );
+  box-shadow:
+    0 5px 10px rgba(76, 29, 15, 0.35),
+    inset 0 0 22px rgba(116, 45, 25, 0.18);
+}
+
+body.theme-cuneiform select {
+  border-color: rgba(112, 49, 28, 0.46);
+  color: #4d2518;
+  background: rgba(255, 217, 163, 0.79);
+}
+
+body.theme-cuneiform select:focus {
+  border-color: #92452b;
+  box-shadow:
+    0 0 0 3px rgba(169, 77, 43, 0.2),
+    inset 0 1px 3px rgba(76, 30, 15, 0.12);
+}
+
+body.theme-cuneiform .focus-tab-card,
+body.theme-cuneiform .timer-card {
+  border-color: rgba(112, 49, 28, 0.31);
+  background: rgba(123, 52, 30, 0.11);
+}
+
+body.theme-cuneiform .secondary-button {
+  background:
+    linear-gradient(180deg, #9f6242 0%, #703b27 54%, #4e271a 100%);
+  box-shadow:
+    0 3px 0 #35160d,
+    inset 0 1px 1px rgba(255, 216, 161, 0.22);
 }

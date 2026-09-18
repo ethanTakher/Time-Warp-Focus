@@ -13,16 +13,24 @@
   <link rel="stylesheet" href="popup.css" />
 </head>
 
-<body>
+<body class="theme-runes">
   <main class="popup-shell">
     <header class="hero">
-      <p class="eyebrow">TIME WARP FOCUS</p>
+      <div
+        class="language-emblem"
+        id="languageEmblem"
+        aria-hidden="true"
+      ></div>
 
-      <h1>Stay in the future.</h1>
+      <div class="hero-text">
+        <p class="eyebrow">TIME WARP FOCUS</p>
 
-      <p class="subtitle">
-        Keep one tab readable. Send the rest back through time.
-      </p>
+        <h1>Stay in the future.</h1>
+
+        <p class="subtitle">
+          Keep one tab readable. Send the rest back through time.
+        </p>
+      </div>
     </header>
 
     <section class="panel" id="setupPanel">
@@ -34,9 +42,9 @@
 
       <select id="language">
         <option value="runes">Viking Runes — Silver</option>
-        <option value="greek">Greek-style Letters</option>
+        <option value="greek">Greek-style Letters — Marble</option>
         <option value="glyphs">Egyptian Hieroglyph-like Glyphs</option>
-        <option value="cuneiform">Sumerian Cuneiform</option>
+        <option value="cuneiform">Sumerian Cuneiform — Clay</option>
       </select>
 
       <button id="startButton" class="primary-button">

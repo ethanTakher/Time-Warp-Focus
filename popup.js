@@ -13,6 +13,19 @@ const focusTime = document.getElementById("focusTime");
 const distractionTime = document.getElementById("distractionTime");
 const warningMessage = document.getElementById("warningMessage");
 
+const themeClasses = [
+  "theme-runes",
+  "theme-greek",
+  "theme-glyphs",
+  "theme-cuneiform"
+];
+
+function applyPopupTheme(language) {
+  document.body.classList.remove(...themeClasses);
+
+  document.body.classList.add(`theme-${language || "runes"}`);
+}
+
 function formatTime(milliseconds) {
   const totalSeconds = Math.floor(milliseconds / 1000);
   const minutes = Math.floor(totalSeconds / 60);
@@ -42,7 +55,11 @@ function updatePopup(data) {
     focusTabSelect.appendChild(makeOption(tab));
   }
 
-  languageSelect.value = state.language || "runes";
+  const selectedLanguage = state.language || "runes";
+
+  languageSelect.value = selectedLanguage;
+
+  applyPopupTheme(selectedLanguage);
 
   if (state.enabled) {
     setupPanel.classList.add("hidden");
@@ -87,10 +104,14 @@ async function refreshPopup() {
 }
 
 startButton.addEventListener("click", async () => {
+  const selectedLanguage = languageSelect.value;
+
+  applyPopupTheme(selectedLanguage);
+
   const response = await chrome.runtime.sendMessage({
     type: "START_FOCUS_SESSION",
     focusTabId: Number(focusTabSelect.value),
-    language: languageSelect.value
+    language: selectedLanguage
   });
 
   if (response?.success) {
@@ -119,9 +140,13 @@ resetTimerButton.addEventListener("click", async () => {
 });
 
 languageSelect.addEventListener("change", async () => {
+  const selectedLanguage = languageSelect.value;
+
+  applyPopupTheme(selectedLanguage);
+
   const response = await chrome.runtime.sendMessage({
     type: "CHANGE_LANGUAGE",
-    language: languageSelect.value
+    language: selectedLanguage
   });
 
   if (response?.success) {
