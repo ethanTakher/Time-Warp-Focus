@@ -158,3 +158,8 @@ The extension does not create a permanent list of websites visited by the user.
 Yes, but only limited local memory.
 
 The extension needs to remember its selected writing style, whether a focus session is active, which tab is the selected focus tab, timer totals, and fade-mode status. This allows the session to continue if the user closes and reo
+
+## Break Log
+1. I cannot select a tab as my focus tab other than the tab I am on at that moment
+2. If I open a pdf within a website, the pdf will not be translated. Same with open editors
+3. I tried to add a "Stop Translation" button that doesn't disappear but stays at the bottom of the screen, but it didn't work
