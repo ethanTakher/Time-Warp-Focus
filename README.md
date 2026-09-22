@@ -101,3 +101,60 @@ The extension uses:
 ## Privacy
 
 Time Warp Focus does not use a server, user accounts, ads, analytics, tracking pixels, or third-party data sharing.
+
+## Data, Storage, and System Requirements
+
+### What data does this tool need?
+
+Time Warp Focus needs only the minimum browser-session data required to run a focus session:
+
+- Whether focus mode is currently enabled.
+- The ID of the selected focus tab.
+- The selected writing style:
+  - Viking Runes.
+  - Greek-style Letters.
+  - Egyptian Hieroglyph-like Glyphs.
+  - Sumerian Cuneiform.
+- Time spent on the selected readable focus tab.
+- Time spent on translated non-focus tabs.
+- The ID of the most recently active tab.
+- The most recent timestamp used for timer calculations.
+- Whether fade mode is active after the user spends at least twice as long on translated tabs as on the focus tab.
+
+The extension also temporarily reads open-tab information, including tab IDs, titles, URLs, and active-tab status. It uses this information to populate the focus-tab dropdown and decide which ordinary web tabs should receive the visual transformation.
+
+The tool does not need page contents, typed text, passwords, search queries, account information, payment information, location data, contacts, browsing-history records, or advertising identifiers.
+
+### Where is the data stored?
+
+Session settings and timer data are stored locally in the user's Chrome browser through `chrome.storage.local`.
+
+The data is stored in the user’s local Chrome profile, not in an external database or cloud service.
+
+The extension does not send this data to:
+
+- A developer server.
+- An AI service.
+- An analytics provider.
+- An advertiser.
+- A data broker.
+- An online buyer.
+- Any other third party.
+
+### Is the data temporary or persistent?
+
+The extension uses both temporary and persistent data.
+
+| Data type | Examples | Storage behavior |
+|---|---|---|
+| Temporary browser data | Current tab list, current tab titles, current URLs, active-tab status | Read from Chrome when needed; not intentionally saved as a browsing history |
+| Persistent local extension data | Selected language, focus-session state, timer totals, fade-mode state | Saved in `chrome.storage.local` so the extension can continue working after the popup closes or Chrome restarts |
+| Page text transformation memory | Original visible text from a webpage while that page is translated | Held temporarily in the page’s content script; removed when the page reloads, closes, or focus mode is turned off |
+
+The extension does not create a permanent list of websites visited by the user.
+
+### Does the system need memory between sessions?
+
+Yes, but only limited local memory.
+
+The extension needs to remember its selected writing style, whether a focus session is active, which tab is the selected focus tab, timer totals, and fade-mode status. This allows the session to continue if the user closes and reo
