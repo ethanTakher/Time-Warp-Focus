@@ -1,6 +1,8 @@
+const MAX_FOCUS_TABS = 3;
+
 const DEFAULT_STATE = {
   enabled: false,
-  focusTabId: null,
+  focusTabIds: [],
   language: "runes",
   focusTimeMs: 0,
   distractionTimeMs: 0,
@@ -12,9 +14,14 @@ const DEFAULT_STATE = {
 async function getState() {
   const stored = await chrome.storage.local.get(DEFAULT_STATE);
 
+  const focusTabIds = Array.isArray(stored.focusTabIds)
+    ? stored.focusTabIds
+    : [];
+
   return {
     ...DEFAULT_STATE,
-    ...stored
+    ...stored,
+    focusTabIds
   };
 }
 
@@ -36,7 +43,7 @@ async function updateTimeTracking() {
 
   const elapsed = Math.max(0, now - state.lastTimestamp);
 
-  if (state.lastActiveTabId === state.focusTabId) {
+  if (state.focusTabIds.includes(state.lastActiveTabId)) {
     state.focusTimeMs += elapsed;
   } else {
     state.distractionTimeMs += elapsed;
@@ -80,7 +87,8 @@ async function sendTabMode(tab) {
     return;
   }
 
-  const isFocusTab = tab.id === state.focusTabId;
+  const isFocusTab = state.focusTabIds.includes(tab.id);
+
   const shouldTranslate = state.enabled && !isFocusTab;
 
   try {
@@ -91,8 +99,8 @@ async function sendTabMode(tab) {
       fadeMode: state.fadeMode
     });
   } catch (error) {
-    // Chrome blocks content scripts on some pages,
-    // and a normal page may not be finished loading yet.
+    // A tab may still be loading or Chrome may block extension access
+    // to that particular page.
   }
 }
 
@@ -105,10 +113,27 @@ async function refreshAllTabs() {
 }
 
 chrome.runtime.onInstalled.addListener(async () => {
-  const state = await chrome.storage.local.get();
+  const stored = await chrome.storage.local.get();
 
-  if (!Object.keys(state).length) {
+  if (!Object.keys(stored).length) {
     await chrome.storage.local.set(DEFAULT_STATE);
+    return;
+  }
+
+  /*
+    Upgrade support:
+    Earlier versions stored one focus tab as focusTabId.
+    This converts it into the new focusTabIds array.
+  */
+  if (
+    !Array.isArray(stored.focusTabIds) &&
+    Number.isInteger(stored.focusTabId)
+  ) {
+    await chrome.storage.local.set({
+      focusTabIds: [stored.focusTabId]
+    });
+
+    await chrome.storage.local.remove("focusTabId");
   }
 });
 
@@ -158,17 +183,39 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 chrome.tabs.onRemoved.addListener(async (tabId) => {
   const state = await getState();
 
-  if (tabId === state.focusTabId) {
+  if (!state.focusTabIds.includes(tabId)) {
+    return;
+  }
+
+  const remainingFocusTabIds = state.focusTabIds.filter(
+    (focusTabId) => focusTabId !== tabId
+  );
+
+  /*
+    If the user closes one of multiple focus tabs, the remaining focus
+    tabs continue working. If they close the final focus tab, the
+    session ends and all other tabs are restored.
+  */
+  if (remainingFocusTabIds.length > 0) {
     await saveState({
-      enabled: false,
-      focusTabId: null,
-      fadeMode: false,
-      lastActiveTabId: null,
+      focusTabIds: remainingFocusTabIds,
       lastTimestamp: Date.now()
     });
 
     await refreshAllTabs();
+
+    return;
   }
+
+  await saveState({
+    enabled: false,
+    focusTabIds: [],
+    fadeMode: false,
+    lastActiveTabId: null,
+    lastTimestamp: Date.now()
+  });
+
+  await refreshAllTabs();
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
@@ -196,12 +243,43 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === "START_FOCUS_SESSION") {
       await updateTimeTracking();
 
-      const focusTabId = Number(message.focusTabId);
+      const requestedFocusTabIds = Array.isArray(message.focusTabIds)
+        ? message.focusTabIds
+        : [];
 
-      if (!Number.isInteger(focusTabId)) {
+      const cleanFocusTabIds = [
+        ...new Set(
+          requestedFocusTabIds
+            .map((tabId) => Number(tabId))
+            .filter((tabId) => Number.isInteger(tabId))
+        )
+      ].slice(0, MAX_FOCUS_TABS);
+
+      if (cleanFocusTabIds.length === 0) {
         sendResponse({
           success: false,
-          error: "Please choose a valid focus tab."
+          error: "Choose at least one focus tab."
+        });
+
+        return;
+      }
+
+      const normalTabs = await getAllNormalTabs();
+
+      const allowedTabIds = new Set(
+        normalTabs
+          .map((tab) => tab.id)
+          .filter((tabId) => Number.isInteger(tabId))
+      );
+
+      const validFocusTabIds = cleanFocusTabIds.filter((tabId) =>
+        allowedTabIds.has(tabId)
+      );
+
+      if (validFocusTabIds.length === 0) {
+        sendResponse({
+          success: false,
+          error: "Choose at least one normal website tab."
         });
 
         return;
@@ -214,7 +292,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       await saveState({
         enabled: true,
-        focusTabId,
+        focusTabIds: validFocusTabIds,
         language: message.language || "runes",
         focusTimeMs: 0,
         distractionTimeMs: 0,
@@ -226,7 +304,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       await refreshAllTabs();
 
       sendResponse({
-        success: true
+        success: true,
+        focusTabIds: validFocusTabIds
       });
 
       return;
@@ -237,7 +316,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       await saveState({
         enabled: false,
-        focusTabId: null,
+        focusTabIds: [],
         fadeMode: false,
         lastTimestamp: Date.now()
       });
@@ -253,7 +332,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     if (message.type === "CHANGE_LANGUAGE") {
       await saveState({
-        language: message.language
+        language: message.language || "runes"
       });
 
       await refreshAllTabs();

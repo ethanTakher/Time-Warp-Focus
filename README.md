@@ -2,37 +2,62 @@
 
 Time Warp Focus is a Chrome extension designed to make tab-based distractions less tempting.
 
-The user chooses one focus tab. That tab remains readable. Other normal web tabs are visually transformed into historic-looking character systems such as Viking runes, Greek-style letters, or hieroglyph-like glyphs.
+The user chooses one, two, or three focus tabs. Selected focus tabs stay readable. Other normal web tabs are visually transformed into historical-looking character systems such as Viking runes, Greek-style letters, Egyptian hieroglyph-like glyphs, or Sumerian cuneiform.
 
-## Data
-
-The extension does not use data from the user, it has all the languages stored on it.
-It doesn't use AI
-
-## Main idea
+## Main Idea
 
 The extension creates useful friction when a user switches to distracting tabs.
 
-It does not permanently block websites. It does not delete content. It does not collect browsing information. Instead, it makes non-focus tabs less convenient to read until the user returns to their selected focus tab.
+It does not permanently block websites. It does not delete content. It does not collect browsing information. Instead, it makes non-focus tabs less convenient to read until the user intentionally ends the focus session.
 
 ## Features
 
-- Select one readable focus tab.
-- Transform text on other HTTP and HTTPS web tabs.
-- Choose Viking Runes, Greek-style Letters, or Hieroglyph-like Glyphs.
-- Track time on focus tabs and translated tabs.
-- Activate fade mode if translated-tab time becomes twice focus-tab time.
+- Select between one and three readable focus tabs.
+- Keep every selected focus tab readable.
+- Transform text on other eligible HTTP and HTTPS web tabs.
+- Choose Viking Runes with a page background of exactly `#808080`.
+- Choose Greek-style letters with a marble visual theme.
+- Choose Egyptian hieroglyph-like glyphs with a sandstone visual theme.
+- Choose Sumerian Cuneiform with a fired-clay visual theme.
+- Track time spent on all selected focus tabs combined.
+- Track time spent on translated tabs.
+- Activate fade mode if translated-tab time becomes twice the total focus-tab time.
+- Continue the session if one selected focus tab is closed and another selected focus tab remains open.
+- Automatically stop the session if all selected focus tabs are closed.
 - Restore all original text when the session ends.
 - Store settings only in Chrome local storage.
 - Send no browsing data to advertisers, buyers, analytics platforms, or third parties.
 
-## Important wording
+## Choosing Focus Tabs
+
+The focus-tab list allows one, two, or three tabs to be selected.
+
+- On Windows or Linux, hold `Ctrl` while clicking tabs to select more than one.
+- On macOS, hold `Command` while clicking tabs to select more than one.
+- The extension will not allow more than three tabs.
+- If one focus tab is closed, remaining selected focus tabs continue to be readable.
+- If the final selected focus tab is closed, focus mode turns off and translated tabs are restored.
+
+## Popup Themes
+
+The extension popup changes appearance depending on the selected writing style.
+
+| Writing style | Popup background | Decorative landmark |
+|---|---|---|
+| Viking Runes | Dark metal and silver | Longship |
+| Greek-style Letters | White and gray marble | Greek shield |
+| Egyptian Glyphs | Ancient parchment and sandstone | Pyramid |
+| Sumerian Cuneiform | Terracotta clay tablet | Stepped ziggurat |
+
+The visual landmarks are built using CSS. No image files are required.
+
+## Important Wording
 
 Time Warp Focus uses visual character substitution.
 
-It does not claim to accurately translate English into Ancient Greek, Old Norse, or Egyptian hieroglyphics. The writing systems are used as a visual focus barrier and historical aesthetic.
+It does not claim to accurately translate English into Ancient Greek, Old Norse, Egyptian hieroglyphics, or Sumerian. The writing systems are used as a visual focus barrier and historical aesthetic.
 
-## Folder files
+## Folder Files
 
 ```text
 time-warp-focus/
@@ -47,12 +72,10 @@ time-warp-focus/
 ├── ROADMAP.md
 ├── PRIVACY.md
 ├── DESIGN.md
-├── CONTRIBUTING.md
-└── icons/
-    └── icon.svg
+└── CONTRIBUTING.md
 ```
 
-## Install locally
+## Install Locally
 
 1. Open Google Chrome.
 2. Go to `chrome://extensions`.
@@ -60,19 +83,24 @@ time-warp-focus/
 4. Click Load unpacked.
 5. Choose the `time-warp-focus` project folder.
 6. Pin the extension from Chrome's Extensions menu.
-7. Open more than one normal website.
-8. Click the Time Warp Focus icon.
-9. Choose the tab you want to focus on.
+7. Open at least two normal websites.
+8. Click the Time Warp Focus extension icon.
+9. Select one, two, or three focus tabs.
 10. Choose a translation style.
 11. Click Begin Focus Session.
 
 ## Testing
 
-- Test on blogs, news websites, Wikipedia pages, and simple normal websites.
-- Reload tabs that were already open before installing or reloading the extension.
-- Test all three visual styles.
+- Test one selected focus tab.
+- Test two selected focus tabs.
+- Test three selected focus tabs.
+- Confirm all selected focus tabs remain readable.
+- Confirm non-selected tabs transform.
+- Close one selected focus tab and confirm the other selected focus tabs still work.
+- Close the final focus tab and confirm the focus session stops.
+- Test all four writing styles.
+- Confirm Rune mode has a page background of `#808080`.
 - Test turning focus mode on and off.
-- Test closing the chosen focus tab.
 - Test the timer and fade-mode behavior.
 
 ## Limitations
@@ -94,75 +122,13 @@ The extension avoids changing text in form fields, text areas, select menus, but
 
 The extension uses:
 
-- `tabs` to identify the selected focus tab and other open tabs.
+- `tabs` to identify selected focus tabs and other open tabs.
 - `storage` to save local session settings and timers.
 - Access to HTTP and HTTPS sites so the extension can apply the reversible visual transformation.
 
 ## Privacy
 
-Time Warp Focus does not use a server, user accounts, ads, analytics, tracking pixels, or third-party data sharing.
-
-## Data, Storage, and System Requirements
-
-### What data does this tool need?
-
-Time Warp Focus needs only the minimum browser-session data required to run a focus session:
-
-- Whether focus mode is currently enabled.
-- The ID of the selected focus tab.
-- The selected writing style:
-  - Viking Runes.
-  - Greek-style Letters.
-  - Egyptian Hieroglyph-like Glyphs.
-  - Sumerian Cuneiform.
-- Time spent on the selected readable focus tab.
-- Time spent on translated non-focus tabs.
-- The ID of the most recently active tab.
-- The most recent timestamp used for timer calculations.
-- Whether fade mode is active after the user spends at least twice as long on translated tabs as on the focus tab.
-
-The extension also temporarily reads open-tab information, including tab IDs, titles, URLs, and active-tab status. It uses this information to populate the focus-tab dropdown and decide which ordinary web tabs should receive the visual transformation.
-
-The tool does not need page contents, typed text, passwords, search queries, account information, payment information, location data, contacts, browsing-history records, or advertising identifiers.
-
-### Where is the data stored?
-
-Session settings and timer data are stored locally in the user's Chrome browser through `chrome.storage.local`.
-
-The data is stored in the user’s local Chrome profile, not in an external database or cloud service.
-
-The extension does not send this data to:
-
-- A developer server.
-- An AI service.
-- An analytics provider.
-- An advertiser.
-- A data broker.
-- An online buyer.
-- Any other third party.
-
-### Is the data temporary or persistent?
-
-The extension uses both temporary and persistent data.
-
-| Data type | Examples | Storage behavior |
-|---|---|---|
-| Temporary browser data | Current tab list, current tab titles, current URLs, active-tab status | Read from Chrome when needed; not intentionally saved as a browsing history |
-| Persistent local extension data | Selected language, focus-session state, timer totals, fade-mode state | Saved in `chrome.storage.local` so the extension can continue working after the popup closes or Chrome restarts |
-| Page text transformation memory | Original visible text from a webpage while that page is translated | Held temporarily in the page’s content script; removed when the page reloads, closes, or focus mode is turned off |
-
-The extension does not create a permanent list of websites visited by the user.
-
-### Does the system need memory between sessions?
-
-Yes, but only limited local memory.
-
-The extension needs to remember its selected writing style, whether a focus session is active, which tab is the selected focus tab, timer totals, and fade-mode status. This allows the session to continue if the user closes and reo
-
-## Break Log
-1. I cannot select a tab as my focus tab other than the tab I am on at that moment
-2. If I open a pdf within a website, the pdf will not be translated. Same with open editors
-3. I tried to add a "Stop Translation" button that doesn't disappear but stays at the bottom of the screen, but it didn't work
+Time Warp Focus does not use a server, user accounts, ads, analytics, tracking pixels, AI services, or third-party data sharing.
 
 ## Feedback
 The freshman student and my father boththought that the tool was very cool, and a solid 4/5 or 5/5. They eithr liked the hieroglyphs’ color scheme best or the greek one but thought the viking runes, in terms of alphabet, looked coolest. They pointed out that the background color did not change on certain websites, like youtube, and that it sometimes changed on buttons you click on. The student suggestion is to make the tool work on several tabs. My dad suggested to make the rune's background less dark. 

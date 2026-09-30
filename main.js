@@ -347,18 +347,30 @@
   }
 
   function setMode({ enabled, language, fadeMode: nextFadeMode }) {
+    const wasEnabled = extensionEnabled;
+    const languageChanged = selectedLanguage !== (language || "runes");
+
     extensionEnabled = Boolean(enabled);
     selectedLanguage = language || "runes";
     fadeMode = Boolean(nextFadeMode);
 
-    if (extensionEnabled) {
-      translatePage();
-      startObserver();
+    if (!extensionEnabled) {
+      stopObserver();
+      restorePage();
       return;
     }
 
-    stopObserver();
-    restorePage();
+    /*
+      If a translated page changes from one style to another,
+      restore the stored readable text first, then reapply the
+      newly selected writing style.
+    */
+    if (wasEnabled && languageChanged) {
+      restorePage();
+    }
+
+    translatePage();
+    startObserver();
   }
 
   chrome.runtime.onMessage.addListener((message) => {

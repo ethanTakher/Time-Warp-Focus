@@ -9,7 +9,7 @@ html.time-warp-active body {
 }
 
 html.time-warp-active::before {
-  content: "TIME WARP MODE — Return to your focus tab when you are ready.";
+  content: "TIME WARP MODE — Return to one of your focus tabs when you are ready.";
   position: fixed;
   z-index: 2147483647;
   top: 0;
@@ -36,38 +36,42 @@ html.time-warp-active canvas {
   filter: sepia(0.55) saturate(0.75) contrast(0.95);
 }
 
-/* Viking Runes: silver, gray, slate, charcoal, and cold stone. */
+/* -------------------------------------------------------
+   VIKING RUNES
+   Exact background color: #808080
+-------------------------------------------------------- */
 
 html.time-warp-active.time-warp-runes {
-  background: #20252c !important;
+  background: #808080 !important;
 }
 
 html.time-warp-active.time-warp-runes body {
-  color: #d6dbe1 !important;
-  background:
-    radial-gradient(circle at top right, rgba(167, 177, 188, 0.16), transparent 35%),
-    linear-gradient(135deg, #181c22, #353d48) !important;
+  color: #e8e8e8 !important;
+  background: #808080 !important;
   font-family: "Segoe UI Symbol", "Noto Sans Runic", "Arial Unicode MS", serif !important;
 }
 
 html.time-warp-active.time-warp-runes::before {
-  color: #f0f3f5;
-  background: rgba(30, 35, 43, 0.97);
-  border-bottom: 1px solid rgba(222, 228, 235, 0.28);
+  color: #ffffff;
+  background: #4f4f4f;
+  border-bottom: 1px solid #c0c0c0;
 }
 
 html.time-warp-active.time-warp-runes a {
-  color: #b9c4d0 !important;
+  color: #f2f2f2 !important;
 }
 
 html.time-warp-active.time-warp-runes img,
 html.time-warp-active.time-warp-runes video,
 html.time-warp-active.time-warp-runes iframe,
 html.time-warp-active.time-warp-runes canvas {
-  filter: grayscale(0.88) contrast(1.1) brightness(0.82);
+  filter: grayscale(1) contrast(1.05) brightness(0.88);
 }
 
-/* Greek-style letters: white marble, cool gray stone, weathered slate. */
+/* -------------------------------------------------------
+   GREEK-STYLE LETTERS
+   White marble, cool gray stone, and weathered slate.
+-------------------------------------------------------- */
 
 html.time-warp-active.time-warp-greek {
   background: #d9d9d5 !important;
@@ -99,7 +103,10 @@ html.time-warp-active.time-warp-greek canvas {
   filter: grayscale(0.76) contrast(0.96) brightness(1.08);
 }
 
-/* Egyptian glyphs: sandstone, desert, ochre, and gold-brown. */
+/* -------------------------------------------------------
+   EGYPTIAN HIEROGLYPH-LIKE GLYPHS
+   Sandstone, desert, ochre, and gold-brown.
+-------------------------------------------------------- */
 
 html.time-warp-active.time-warp-glyphs {
   background: #e8d2a8 !important;
@@ -129,7 +136,10 @@ html.time-warp-active.time-warp-glyphs canvas {
   filter: sepia(0.8) saturate(0.85) contrast(0.96);
 }
 
-/* Sumerian Cuneiform: fired clay, terracotta, mud brick, and ink. */
+/* -------------------------------------------------------
+   SUMERIAN CUNEIFORM
+   Fired clay tablets, terracotta, mud brick, and ink.
+-------------------------------------------------------- */
 
 html.time-warp-active.time-warp-cuneiform {
   background: #b77a52 !important;
@@ -161,7 +171,9 @@ html.time-warp-active.time-warp-cuneiform canvas {
   filter: sepia(0.86) saturate(0.9) contrast(1.04) brightness(0.9);
 }
 
-/* Fade mode activates after translated-tab time reaches 2× focus time. */
+/* -------------------------------------------------------
+   DISTRACTION LIMIT / FADE MODE
+-------------------------------------------------------- */
 
 html.time-warp-active.time-warp-fade body {
   color: transparent !important;
@@ -195,7 +207,7 @@ html.time-warp-active.time-warp-runes.time-warp-fade h6,
 html.time-warp-active.time-warp-runes.time-warp-fade li,
 html.time-warp-active.time-warp-runes.time-warp-fade span,
 html.time-warp-active.time-warp-runes.time-warp-fade div {
-  text-shadow: 0 0 10px rgba(211, 219, 228, 0.9) !important;
+  text-shadow: 0 0 10px #f2f2f2 !important;
 }
 
 html.time-warp-active.time-warp-greek.time-warp-fade body,
@@ -229,14 +241,14 @@ html.time-warp-active.time-warp-cuneiform.time-warp-fade div {
 }
 
 html.time-warp-active.time-warp-fade::before {
-  content: "DISTRACTION LIMIT REACHED — Your readable focus tab is waiting.";
+  content: "DISTRACTION LIMIT REACHED — Your readable focus tabs are waiting.";
   color: #ffe6c0;
   background: rgba(93, 42, 31, 0.97);
 }
 
 html.time-warp-active.time-warp-runes.time-warp-fade::before {
-  color: #f1f4f8;
-  background: rgba(33, 38, 47, 0.98);
+  color: #ffffff;
+  background: #4f4f4f;
 }
 
 html.time-warp-active.time-warp-greek.time-warp-fade::before {

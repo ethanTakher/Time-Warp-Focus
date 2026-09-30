@@ -28,15 +28,26 @@
         <h1>Stay in the future.</h1>
 
         <p class="subtitle">
-          Keep one tab readable. Send the rest back through time.
+          Keep up to three tabs readable. Send the rest back through time.
         </p>
       </div>
     </header>
 
     <section class="panel" id="setupPanel">
-      <label for="focusTab">Your focus tab</label>
+      <label for="focusTab">
+        Your focus tabs
+      </label>
 
-      <select id="focusTab"></select>
+      <p class="selection-help">
+        Select 1–3 tabs. Hold Ctrl (Windows/Linux) or Command (Mac)
+        while clicking to choose more than one.
+      </p>
+
+      <select id="focusTab" multiple size="5"></select>
+
+      <p id="selectionCount" class="selection-count">
+        0 of 3 focus tabs selected
+      </p>
 
       <label for="language">Translation style</label>
 
@@ -59,11 +70,13 @@
       </div>
 
       <div class="focus-tab-card">
-        <p class="card-label">Readable tab</p>
+        <p class="card-label">Readable focus tabs</p>
 
-        <p id="activeFocusTab" class="focus-tab-name">
-          Loading...
-        </p>
+        <ul
+          id="activeFocusTabs"
+          class="focus-tab-list"
+          aria-label="Selected readable focus tabs"
+        ></ul>
       </div>
 
       <div class="timer-grid">
